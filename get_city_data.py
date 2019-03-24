@@ -8,10 +8,11 @@ import codecs
 import sys
 import io
 
-# better practice would be to save key locally then call it here
-api_key = 'Your API Key Here' 
+# access API key saved in a .txt file locally
+api_file = open("api_key.txt", "r")
+api_key = api_file.read()
+api_file.close
 
 # one way to access Meetup group-specific data
 client = meetup.api.Client(api_key)
 group_info = client.GetGroup({'urlname':'Houston_PyLadies'})
-print(group_info.name)
