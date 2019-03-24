@@ -5,7 +5,7 @@ logins = list(
   'source1' = data.frame(username = 'example'
                          , password = 'example'
                          , stringsAsFactors = FALSE)
-  , 'source1' = data.frame(username = 'example'
+  , 'source2' = data.frame(username = 'example'
                             , password = 'example'
                             , stringsAsFactors = FALSE)
 )
