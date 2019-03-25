@@ -2,6 +2,7 @@
 Collaboration on tool to generate usable information
 
 Format of info.py:
+
 Save locally with your credentials and add to gitignore
 
 ```logins = {
