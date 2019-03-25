@@ -32,5 +32,5 @@ cat1_pdx_request = requests.get("https://api.meetup.com/find/groups?zip=97215&ca
 # normalize json data
 df = pd.DataFrame.from_dict(json_normalize(pdx_request), orient='columns')
 
-# decode and load data into python object
-cat1_pdx_df = json.loads(cat1_pdx_request.decode('utf-8'))
+# decode and load data into python object, then a dataframe
+cat1_pdx_df = pd.DataFrame.from_dict(json.loads(cat1_pdx_request.decode('utf-8')))
