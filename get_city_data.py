@@ -1,13 +1,16 @@
 # resource: https://www.datacamp.com/community/tutorials/meetup-api-data-json
 
 import meetup.api
-from info.py import logins
+from info import logins
 import json
 import requests
 import time
 import codecs
 import sys
 import io
+import pandas as pd
+from pandas.io.json import json_normalize
+import numpy as np
 
 # access API key saved in a api_key.txt file locally
 # api_file = open("api_key.txt", "r")
@@ -22,4 +25,6 @@ client = meetup.api.Client(api_key)
 group_info = client.GetGroup({'urlname':'Houston_PyLadies'})
 
 # search by zip code directly - using requests
-request = requests.get("https://api.meetup.com/find/groups?zip=11211&key="+api_key)
+pdx_request = requests.get("https://api.meetup.com/find/groups?zip=97215&key="+api_key)
+# limit request to 1 category in 1 zip code
+cat1_pdx_request = requests.get("https://api.meetup.com/find/groups?zip=97215&category_id=1&key="+api_key).content
