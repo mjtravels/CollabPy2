@@ -28,3 +28,9 @@ group_info = client.GetGroup({'urlname':'Houston_PyLadies'})
 pdx_request = requests.get("https://api.meetup.com/find/groups?zip=97215&key="+api_key)
 # limit request to 1 category in 1 zip code
 cat1_pdx_request = requests.get("https://api.meetup.com/find/groups?zip=97215&category_id=1&key="+api_key).content
+
+# normalize json data
+df = pd.DataFrame.from_dict(json_normalize(pdx_request), orient='columns')
+
+# decode and load data into python object
+cat1_pdx_df = json.loads(cat1_pdx_request.decode('utf-8'))
