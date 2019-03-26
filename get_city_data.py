@@ -29,8 +29,12 @@ pdx_request = requests.get("https://api.meetup.com/find/groups?zip=97215&key="+a
 # limit request to 1 category in 1 zip code
 cat1_pdx_request = requests.get("https://api.meetup.com/find/groups?zip=97215&category_id=1&key="+api_key).content
 
+# alternate way perform request, using params= as argument for requests.get()
+# seems to return a 'Response' type
+response2 = requests.get("http://api.meetup.com/find/groups", params={'city':'Portland','category_id':1,'key':api_key})
+
 # normalize json data
-df = pd.DataFrame.from_dict(json_normalize(pdx_request), orient='columns')
+# df = pd.DataFrame.from_dict(json_normalize(pdx_request), orient='columns')
 
 # decode and load data into python object, then a dataframe
 cat1_pdx_df = pd.DataFrame.from_dict(json.loads(cat1_pdx_request.decode('utf-8')))
