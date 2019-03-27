@@ -10,7 +10,6 @@ import sys
 import io
 import pandas as pd
 from pandas.io.json import json_normalize
-import numpy as np
 
 mj_categories = [1,4,5,6,9,12,13,14,23,26,27,30,31,32,34]
 
