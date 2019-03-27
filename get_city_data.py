@@ -65,5 +65,5 @@ cat1_pdx_df = pd.io.json.json_normalize(cat1_pdx)
 # data checks on above output:
 type(cat1_pdx_df)
 cat1_pdx_df.head()
-cat1_pdx_df3.count()
-cat1_pdx_df3.groupby('category.id').count()
+cat1_pdx_df.count()
+cat1_pdx_df.groupby('category.id').count()
