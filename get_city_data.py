@@ -44,4 +44,26 @@ response2 = requests.get("http://api.meetup.com/find/groups", params={'city':'Po
 # df = pd.DataFrame.from_dict(json_normalize(pdx_request), orient='columns')
 
 # decode and load data into python object, then a dataframe
-cat1_pdx_df = pd.DataFrame.from_dict(json.loads(cat1_pdx_request.decode('utf-8')))
+# cat1_pdx_df = pd.DataFrame.from_dict(json.loads(cat1_pdx_request.decode('utf-8')))
+
+
+# STEP 1 OF CONVERTING JSON TO DATAFRAME: CONVERT JSON TO LIST OF DICTS
+# split up dataframe creation - first load json object into list of dicts
+# each list item is 1 group
+# resource: https://stackoverflow.com/questions/19483351/converting-json-string-to-dictionary-not-list
+cat1_pdx = json.loads(cat1_pdx_request.decode('utf-8'))
+
+# data checks on above output:
+type(cat1_pdx)
+len(cat1_pdx)
+cat1_pdx[2]
+
+# STEP 2 OF CONVERTING JSON TO DATAFRAME: NORMALIZE LIST OF DICTS INTO DF
+# resource: https://stackoverflow.com/questions/20638006/convert-list-of-dictionaries-to-a-pandas-dataframe/53831756#53831756
+cat1_pdx_df = pd.io.json.json_normalize(cat1_pdx)
+
+# data checks on above output:
+type(cat1_pdx_df)
+cat1_pdx_df.head()
+cat1_pdx_df3.count()
+cat1_pdx_df3.groupby('category.id').count()
