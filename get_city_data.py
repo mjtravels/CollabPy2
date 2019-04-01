@@ -11,8 +11,10 @@ import io
 import pandas as pd
 from pandas.io.json import json_normalize
 
-mj_categories = [1,4,5,6,9,12,13,14,23,26,27,30,31,32,34]
+mj_cats = [1,4,5,6,9,12,13,14,23,26,27,30,31,32,34]
 example_mj_cats = [1,4,5]
+mj_cities = []
+example_mj_cities = ['Portland']
 
 # access API key saved in a api_key.txt file locally
 # api_file = open("api_key.txt", "r")
@@ -34,9 +36,11 @@ cat1_pdx_request = requests.get("https://api.meetup.com/find/groups?zip=97215&ca
 # make an API call for each category MJ is interested in; store API responses in list
 # need to revise because New Age & Sprituality shouldn't be a result
 cats_pdx_requests = []
-for cat in mj_categories:
-    cats_pdx_requests.append(requests.get("https://api.meetup.com/find/groups?zip=97215&category="+str(cat)+"&key="+api_key).content)
-
+for cat in example_mj_cats:
+    # append individual cat responses, decoded and turned into df in same step
+    cats_pdx_requests.append(pd.io.json.json_normalize(json.loads(requests.get("https://api.meetup.com/find/groups?zip=97215&category="+str(cat)+"&key="+api_key).content.decode('utf-8'))))
+# concatenate the dfs within cats_pdx_requests - need to automate
+cats_pdx_df = pd.concat(cats_pdx_requests)
 
 # resource: https://www.dataquest.io/blog/python-api-tutorial/
 # alternate way perform request, using params= as argument for requests.get()
@@ -48,7 +52,6 @@ response2 = requests.get("http://api.meetup.com/find/groups", params={'city':'Po
 
 # decode and load data into python object, then a dataframe
 # cat1_pdx_df = pd.DataFrame.from_dict(json.loads(cat1_pdx_request.decode('utf-8')))
-
 
 # STEP 1 OF CONVERTING JSON TO DATAFRAME: CONVERT JSON TO LIST OF DICTS
 # split up dataframe creation - first load json object into list of dicts
@@ -70,3 +73,14 @@ type(cat1_pdx_df)
 cat1_pdx_df.head()
 cat1_pdx_df.count()
 cat1_pdx_df.groupby('category.id').count()
+
+# data check on multiple cat output
+type(cats_pdx_df)
+cats_pdx_df.head()
+cats_pdx_df.count()
+cats_pdx_df.groupby('category.id').count()
+
+
+# filter dataframe for relevant categories
+filtered_cats_pdx_df = cats_pdx_df[cats_pdx_df['category.id'].isin(example_mj_cats)]
+filtered_cats_pdx_df.groupby('category.id').count()
