@@ -1,11 +1,7 @@
-# CollabPy2
-Collaboration on tool to generate usable information
+# Converting info.py to python dict
+# this would be saved locally with each user's credentials and added to gitignore
 
-## Format of info.py
-
-Save locally with your credentials and add to gitignore
-
-```logins = {
+logins = {
   'meetup': {
 	  'api_key': 'example_api_key',
 	  'oauth_1': 'example_oauth_thing'
@@ -15,4 +11,4 @@ Save locally with your credentials and add to gitignore
 	  'username': 'example_username',
 	  'password': 'example_password'
   }
-}```
+}
