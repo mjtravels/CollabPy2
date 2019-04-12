@@ -14,7 +14,7 @@ from pandas.io.json import json_normalize
 mj_cats = [1,4,5,6,9,12,13,14,23,26,27,30,31,32,34]
 example_mj_cats = [1,4,5]
 mj_cities = []
-example_mj_cities = ['Portland']
+example_mj_cities = ['Portland', 'Seattle']
 
 # access API key saved in a api_key.txt file locally
 # api_file = open("api_key.txt", "r")
@@ -37,8 +37,9 @@ cat1_pdx_request = requests.get("https://api.meetup.com/find/groups?zip=97215&ca
 # need to revise because New Age & Sprituality shouldn't be a result
 cats_pdx_requests = []
 for cat in example_mj_cats:
-    # append individual cat responses, decoded and turned into df in same step
-    cats_pdx_requests.append(pd.io.json.json_normalize(json.loads(requests.get("https://api.meetup.com/find/groups?zip=97215&category="+str(cat)+"&key="+api_key).content.decode('utf-8'))))
+    for city in example_mj_cities:
+        # append individual cat & city responses, decoded and turned into df in same step
+        cats_pdx_requests.append(pd.io.json.json_normalize(json.loads(requests.get("https://api.meetup.com/find/groups?location="+city+"&category="+str(cat)+"&key="+api_key).content.decode('utf-8'))))
 # concatenate the dfs within cats_pdx_requests - need to automate
 cats_pdx_df = pd.concat(cats_pdx_requests)
 
@@ -84,3 +85,4 @@ cats_pdx_df.groupby('category.id').count()
 # filter dataframe for relevant categories
 filtered_cats_pdx_df = cats_pdx_df[cats_pdx_df['category.id'].isin(example_mj_cats)]
 filtered_cats_pdx_df.groupby('category.id').count()
+
